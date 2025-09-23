@@ -22,6 +22,23 @@ app.use(
 );
 app.use(express.json());
 
+// Health check route
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "Feedback System API is running!",
+    timestamp: new Date().toISOString()
+  });
+});
+
+app.get("/api/health", (req, res) => {
+  res.json({
+    success: true,
+    message: "Server is healthy",
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Start server function
 const startServer = async () => {
   try {
