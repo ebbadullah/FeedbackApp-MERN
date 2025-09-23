@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "./hooks/useAuth";
-import { useToast } from "./components/ui/toast";
+import { useToast } from "./components/ui/Toast"
 import MainLayout from "./layouts/MainLayout";
 import FeedbackFormPage from "./pages/FeedbackFormPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
