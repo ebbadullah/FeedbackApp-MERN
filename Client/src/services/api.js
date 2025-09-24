@@ -1,6 +1,10 @@
 import axios from "axios";
 
-export const api = axios.create({ baseURL: "/api" });
+// Use Render API URL for production, fallback to local proxy for dev
+const baseURL = import.meta.env?.VITE_API_URL || 
+  (import.meta.env?.PROD ? "https://feedbackapp-mern.onrender.com/api" : "/api");
+
+export const api = axios.create({ baseURL });
 
 export const setupAxiosDefaults = () => {
     api.interceptors.request.use(

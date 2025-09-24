@@ -13,13 +13,30 @@ dotenv.config();
 // Create Express app
 const app = express();
 
+// Allowed origins
+const allowedOrigins = [
+  "http://localhost:5173", // local dev
+  "https://techzone-learning-feedbackapp.netlify.app", // deployed frontend
+  "https://*.netlify.app" // allow all netlify subdomains
+];
+
 // Middleware
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else if (origin && origin.endsWith('.netlify.app')) {
+        // Allow any netlify.app subdomain
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
 app.use(express.json());
 
 // Health check route
