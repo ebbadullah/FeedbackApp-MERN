@@ -104,44 +104,80 @@ const FeedbackForm = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block mb-1">Course Name *</label>
-                        <select name="courseName" value={formData.courseName} onChange={handleChange} className="w-full p-2 border" required>
-                            <option value="">Select Course</option>
+                        <input
+                            type="text"
+                            name="courseName"
+                            list="courseOptionsList"
+                            value={formData.courseName}
+                            onChange={handleChange}
+                            className="w-full p-2 border"
+                            placeholder="Select or type course"
+                            required
+                        />
+                        <datalist id="courseOptionsList">
                             {courseOptions.map((course) => (
-                                <option key={course} value={course}>{course}</option>
+                                <option key={course} value={course} />
                             ))}
-                        </select>
+                        </datalist>
                     </div>
 
                     <div>
                         <label className="block mb-1">Teacher Name *</label>
-                        <select name="teacherName" value={formData.teacherName} onChange={handleChange} className="w-full p-2 border" required>
-                            <option value="">Select Teacher</option>
+                        <input
+                            type="text"
+                            name="teacherName"
+                            list="teacherOptionsList"
+                            value={formData.teacherName}
+                            onChange={handleChange}
+                            className="w-full p-2 border"
+                            placeholder="Select or type teacher"
+                            required
+                        />
+                        <datalist id="teacherOptionsList">
                             {teacherOptions.map((teacher) => (
-                                <option key={teacher} value={teacher}>{teacher}</option>
+                                <option key={teacher} value={teacher} />
                             ))}
-                        </select>
+                        </datalist>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block mb-1">Batch Timing *</label>
-                        <select name="batchTiming" value={formData.batchTiming} onChange={handleChange} className="w-full p-2 border" required>
-                            <option value="">Select Timing</option>
+                        <input
+                            type="text"
+                            name="batchTiming"
+                            list="timingOptionsList"
+                            value={formData.batchTiming}
+                            onChange={handleChange}
+                            className="w-full p-2 border"
+                            placeholder="Select or type timing"
+                            required
+                        />
+                        <datalist id="timingOptionsList">
                             {timingOptions.map((timing) => (
-                                <option key={timing} value={timing}>{timing}</option>
+                                <option key={timing} value={timing} />
                             ))}
-                        </select>
+                        </datalist>
                     </div>
 
                     <div>
                         <label className="block mb-1">Class Days *</label>
-                        <select name="classDays" value={formData.classDays} onChange={handleChange} className="w-full p-2 border" required>
-                            <option value="">Select Days</option>
+                        <input
+                            type="text"
+                            name="classDays"
+                            list="daysOptionsList"
+                            value={formData.classDays}
+                            onChange={handleChange}
+                            className="w-full p-2 border"
+                            placeholder="Select or type days (e.g., MWF, TTS)"
+                            required
+                        />
+                        <datalist id="daysOptionsList">
                             {daysOptions.map((days) => (
-                                <option key={days} value={days}>{days}</option>
+                                <option key={days} value={days} />
                             ))}
-                        </select>
+                        </datalist>
                     </div>
                 </div>
 
