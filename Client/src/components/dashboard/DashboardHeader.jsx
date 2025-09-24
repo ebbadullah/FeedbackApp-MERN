@@ -1,6 +1,6 @@
 import { Download, BarChart2, Filter, RefreshCw, Users, BookOpen, Star, Clock } from "lucide-react";
 
-const DashboardHeader = ({ onExport, onRefresh }) => {
+const DashboardHeader = ({ onExport, onRefresh, stats, loading }) => {
     return (
         <div className="p-4 mb-4">
             <div className="flex justify-between mb-4">
@@ -40,8 +40,12 @@ const DashboardHeader = ({ onExport, onRefresh }) => {
                         </div>
                         <div>
                             <div className="text-sm text-gray-500">Total Feedbacks</div>
-                            <div className="font-bold">247</div>
-                            <div className="text-xs text-blue-600">12% from last month</div>
+                            <div className="font-bold">
+                                {loading ? "..." : (stats?.totalFeedbacks || 0)}
+                            </div>
+                            <div className={`text-xs ${stats?.feedbackChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                {loading ? "..." : `${stats?.feedbackChange >= 0 ? '+' : ''}${stats?.feedbackChange || 0}% from last month`}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -53,8 +57,12 @@ const DashboardHeader = ({ onExport, onRefresh }) => {
                         </div>
                         <div>
                             <div className="text-sm text-gray-500">Average Teaching Rating</div>
-                            <div className="font-bold">4.7/5</div>
-                            <div className="text-xs text-green-600">0.3 from last month</div>
+                            <div className="font-bold">
+                                {loading ? "..." : `${stats?.avgTeachingRating || 0}/5`}
+                            </div>
+                            <div className={`text-xs ${stats?.teachingChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                {loading ? "..." : `${stats?.teachingChange >= 0 ? '+' : ''}${stats?.teachingChange || 0} from last month`}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -66,8 +74,12 @@ const DashboardHeader = ({ onExport, onRefresh }) => {
                         </div>
                         <div>
                             <div className="text-sm text-gray-500">Average Content Rating</div>
-                            <div className="font-bold">4.5/5</div>
-                            <div className="text-xs text-yellow-700">0.2 from last month</div>
+                            <div className="font-bold">
+                                {loading ? "..." : `${stats?.avgContentRating || 0}/5`}
+                            </div>
+                            <div className={`text-xs ${stats?.contentChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                {loading ? "..." : `${stats?.contentChange >= 0 ? '+' : ''}${stats?.contentChange || 0} from last month`}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,8 +91,12 @@ const DashboardHeader = ({ onExport, onRefresh }) => {
                         </div>
                         <div>
                             <div className="text-sm text-gray-500">Most Popular Course</div>
-                            <div className="font-bold">Web Development</div>
-                            <div className="text-xs text-purple-600">56 feedbacks this month</div>
+                            <div className="font-bold">
+                                {loading ? "..." : (stats?.mostPopularCourse || "No data")}
+                            </div>
+                            <div className="text-xs text-purple-600">
+                                {loading ? "..." : `${stats?.currentMonthPopularCourseCount || 0} feedbacks this month`}
+                            </div>
                         </div>
                     </div>
                 </div>

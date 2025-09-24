@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { useState, useEffect } from "react";
 import { useToast } from "../hooks/useToast";
-import { getAllFeedbacks, exportFeedbacks } from "../services/feedbackService";
+import { getAllFeedbacks, getDashboardStats, exportFeedbacks } from "../services/feedbackService";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import FeedbackFilters from "../components/dashboard/FeedbackFilters";
 import FeedbackTable from "../components/dashboard/FeedbackTable";
@@ -10,7 +10,9 @@ import SearchBar from "../components/dashboard/SearchBar";
 const DashboardPage = () => {
     const [feedbacks, setFeedbacks] = useState([]);
     const [filteredFeedbacks, setFilteredFeedbacks] = useState([]);
+    const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [statsLoading, setStatsLoading] = useState(true);
     const [filters, setFilters] = useState({ course: "", teacher: "", timing: "", days: "", searchTerm: "" });
     const { showSuccess, showError } = useToast();
 
@@ -19,20 +21,27 @@ const DashboardPage = () => {
     };
 
     useEffect(() => {
-        const fetchFeedbacks = async () => {
+        const fetchData = async () => {
             try {
-                const response = await getAllFeedbacks();
-                setFeedbacks(response.data || []);
-                setFilteredFeedbacks(response.data || []);
+                // Fetch feedbacks and stats in parallel
+                const [feedbacksResponse, statsResponse] = await Promise.all([
+                    getAllFeedbacks(),
+                    getDashboardStats()
+                ]);
+                
+                setFeedbacks(feedbacksResponse.data || []);
+                setFilteredFeedbacks(feedbacksResponse.data || []);
+                setStats(statsResponse.data);
             } catch (error) {
-                console.error("Error fetching feedbacks:", error);
-                showError("Failed to load feedback data");
+                console.error("Error fetching data:", error);
+                showError("Failed to load dashboard data");
             } finally {
                 setLoading(false);
+                setStatsLoading(false);
             }
         };
 
-        fetchFeedbacks();
+        fetchData();
     }, [showError]);
 
     useEffect(() => {
@@ -85,7 +94,7 @@ const DashboardPage = () => {
             </Helmet>
 
             <div className="p-4">
-                <DashboardHeader onExport={handleExport} />
+                <DashboardHeader onExport={handleExport} stats={stats} loading={statsLoading} />
 
                 <div className="bg-white p-4 border">
                     <FeedbackFilters filters={filters} onFilterChange={handleFilterChange} onClearFilters={clearFilters} courseOptions={getUniqueValues("courseName")} teacherOptions={getUniqueValues("teacherName")} timingOptions={getUniqueValues("batchTiming")} daysOptions={getUniqueValues("classDays")} />

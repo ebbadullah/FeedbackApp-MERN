@@ -10,6 +10,11 @@ export const getAllFeedbacks = async () => {
     return response.data;
 };
 
+export const getDashboardStats = async () => {
+    const response = await api.get("/admin/feedbacks/stats");
+    return response.data;
+};
+
 export const exportFeedbacks = async () => {
     const response = await api.get("/admin/feedbacks/export", { responseType: "blob" });
     return response.data;

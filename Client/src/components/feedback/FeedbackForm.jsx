@@ -9,6 +9,7 @@ const FeedbackForm = () => {
     });
 
     const [loading, setLoading] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
     const courseOptions = ["Web Development", "Graphics Design", "Digital Marketing", "Mobile App Development", "Data Science"];
     const teacherOptions = ["Sir Abdul Rehman", "Sir Rehan Mughal", "Sir Ahmed Khan", "Sir Mohsin", "Sir Anas"];
     const timingOptions = ["9AM-12PM", "2PM-5PM", "6PM-9PM"];
@@ -36,10 +37,7 @@ const FeedbackForm = () => {
         try {
             await submitFeedback(formData);
             toast.success("Feedback submitted successfully!");
-
-            setFormData({
-                studentName: "", courseName: "", teacherName: "", batchTiming: "", classDays: "", teachingRating: 0, contentRating: 0, comments: "",
-            });
+            setIsSubmitted(true);
         } catch (error) {
             console.error("Error submitting feedback:", error);
             toast.error("Failed to submit feedback. Please try again.");
@@ -57,6 +55,40 @@ const FeedbackForm = () => {
             </div>
         );
     };
+
+    const ThankYouCard = () => (
+        <div className="border border-green-200 p-8 bg-white text-center">
+            <div className="mb-6">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-green-600 mb-2">Thank You!</h2>
+                <p className="text-gray-600 mb-4">
+                    Your feedback has been submitted successfully. We truly appreciate you taking the time to share your experience with us.
+                </p>
+                <p className="text-sm text-gray-500 mb-6">
+                    Your input helps us improve our teaching quality and student experience.
+                </p>
+            </div>
+            <button 
+                onClick={() => {
+                    setIsSubmitted(false);
+                    setFormData({
+                        studentName: "", courseName: "", teacherName: "", batchTiming: "", classDays: "", teachingRating: 0, contentRating: 0, comments: "",
+                    });
+                }}
+                className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors"
+            >
+                Submit Another Feedback
+            </button>
+        </div>
+    );
+
+    if (isSubmitted) {
+        return <ThankYouCard />;
+    }
 
     return (
         <div className="border border-blue-200 p-4 bg-white">
