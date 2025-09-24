@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { Star } from "lucide-react";
+import { submitFeedback } from "../../services/feedbackService";
 
 const FeedbackForm = () => {
     const [formData, setFormData] = useState({
@@ -34,7 +34,7 @@ const FeedbackForm = () => {
         setLoading(true);
 
         try {
-            await axios.post("/api/feedback", formData);
+            await submitFeedback(formData);
             toast.success("Feedback submitted successfully!");
 
             setFormData({
