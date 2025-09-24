@@ -29,9 +29,9 @@ const DashboardPage = () => {
                     getDashboardStats()
                 ]);
                 
-                setFeedbacks(feedbacksResponse.data || []);
-                setFilteredFeedbacks(feedbacksResponse.data || []);
-                setStats(statsResponse.data);
+                setFeedbacks(feedbacksResponse.data?.data || []);
+                setFilteredFeedbacks(feedbacksResponse.data?.data || []);
+                setStats(statsResponse.data?.data || null);
             } catch (error) {
                 console.error("Error fetching data:", error);
                 showError("Failed to load dashboard data");
