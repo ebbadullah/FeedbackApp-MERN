@@ -97,7 +97,7 @@ const DashboardPage = () => {
             </Helmet>
 
             <div className="p-4">
-                <DashboardHeader onExport={handleExport} stats={stats} loading={statsLoading} />
+                <DashboardHeader onExport={handleExport} onRefresh={() => window.location.reload()} stats={stats} loading={statsLoading} />
 
                 <div className="bg-white p-4 border">
                     <FeedbackFilters filters={filters} onFilterChange={handleFilterChange} onClearFilters={clearFilters} courseOptions={getUniqueValues("courseName")} teacherOptions={getUniqueValues("teacherName")} timingOptions={getUniqueValues("batchTiming")} daysOptions={getUniqueValues("classDays")} />

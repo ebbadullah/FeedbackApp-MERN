@@ -68,6 +68,7 @@ const startServer = async () => {
 
     // Routes
     app.use("/api/feedback", feedbackRoutes);
+    app.use("/api/admin/feedbacks", feedbackRoutes);
     app.use("/api/admin", authRoutes);
 
     // Error handler
